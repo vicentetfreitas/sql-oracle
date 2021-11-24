@@ -1,146 +1,42 @@
 /*
- SEÇÃO 8 - AULA 1
-Utilizando Funções Single Row
+Autor: Vicente T Freitas
+Descrição: Curso de Oracle SQL Especialista: do Básico ao Avançado
 
-OBJETIVOS
+--  SEÇÃO 08 - Aula 01: Utilizando Funções Single Row
 
-    Conhecer os vários tipos de funções disponíveis no SQL
-    Utilizar funções single row para trabalhar com string de caracteres, números e datas
+--  OBJETIVOS
+     > Conhecer os vários tipos de funções disponíveis no SQL
+     > Utilizar funções single row para trabalhar com string de caracteres, números e datas
 
-Tipos de Funções SQL
-
-    Single row functions
-    Multiple row functions
-
-Funções SQL Single row
-
-    Características:
-    
-        Podem manipular itens de dados;
-        Receber argumentos e retornar um valor;
-        Atuam sobre cada linha retornada;
-        Retornam um resultado por linha;
-        Podem modificar o tipo de dado;
-        Podem ser aninhadas;
-        Recebem argumentos que podem ser colunas ou expressões.
+--  ANOTAÇÕES
+--  Tipos de Funções SQL
+     > Single row functions
+     > Multiple row functions
+     
+--  Funções SQL Single row
+    > Características:
+        - Podem manipular itens de dados;
+        - Receber argumentos e retornar um valor;
+        - Atuam sobre cada linha retornada;
+        - Retornam um resultado por linha;
+        - Podem modificar o tipo de dado;
+        - Podem ser aninhadas;
+        - Recebem argumentos que podem ser colunas ou expressões.
         
-    Sintaxe:
-        
-        nome_funcao[(arg1,arg2,...)]
+--  Sintaxe:
+     > nome_funcao[(arg1,arg2,...)]
     
-    Tipos:
-    
-        Character
-        Number
-        Date
-        Conversion
-        General
-    
-    Funções Tipo Characterer 
-    
-        Character Functions
-        
-            Case-conversion functions:
-                Funções de Conversão Maiúsculo e Minúsculo:
-                    LOWER
-                        LOWER('Introdução ORACLE 19c')   =>  introdução oracle 19c
-                    UPPER
-                        UPPER('Introdução ORACLE 19c')   =>  INTRODUÇÃO ORACLE 19C
-                    INITCAP
-                        INITCAP('Introdução ORACLE 19c') =>  Introdução Oracle 19c
-                
-                    SELECT employee_id, last_name, department_id
-                    FROM employees
-                    WHERE last_name = 'KING';
-                
-            Character-manipulation functions
-            
-                Funções de Manipulação de Caracteres
-                
-                    CONCAT
-                        CONCAT('Curso: 'Introdução ORACLE 19C') =>  Curso: Introdução ORACLE 19c
-                    SUBSTR
-                        SUBSTR('Introdução ORACLE 19c',1,11)    =>  Introdução
-                    LENGTH
-                        LENGTH('Introdução ORACLE 19c')         =>  21
-                    INSTR
-                        INSTR('Introdução ORACLE 19c','ORACLE') =>  12
-                    LPAD | RPAD
-                        LPAD('Introdução ORACLE 19c',10,'*')            =>  **********Introdução ORACLE 19c
-                        RPAD('Introdução ORACLE 19c',10,'*')            =>  Introdução ORACLE 19c**********
-                    REPLACE
-                        REPLACE('Introdução ORACLE 12c','12c','19c')    =>  Introdução ORACLE 19c
-                    TRIM
-                        TRIM(';'FROM 'nome@gmail.com;')                 =>  nome@gmail.com
-                    RTRIM
-                        RTRIM('nome@gmail.com',';')                     =>  nome@gmail.com
-                    LTRIM
-                        LTRIM(' nome@gmail.com','')                     =>  nome@gmail.com
-                    
-                    
-                    SELECT 
-                    CONCAT('Curso: Introdução ORACLE 19c'),
-                    SUBSTR('Introdução ORACLE 19c',1,11),
-                    LENGTH('Introdução ORACLE 19c'),
-                    INSTR('Introdução ORACLE 19c','ORACLE')
-                    FROM dual;
-                    
-                    SELECT 
-                    first_name "Nome",
-                    LPAD(first_name,20,'') "Nome alinhado a direita",
-                    RPAD(first_name,20,'') "Nome alinhado a esquerda"
-                    FROM employees;
-    
-                Funções tipo NUMBER
-                
-                ROUND: arredonda o valor para a casa decimal especificada
-                TRUNC: Trunca o valor para a casa decimaal especificada
-                MOD: Retorna o resto da divisão
-    
-    Funções tipo DATE - Trabalhando com Datas
-    
-        O format default de exibição de datas é definido pelo DBA através do parametro NLS_DATE_FORMAT;
-        No Brasil normalmente o formato default de exibição de datas é definido para 'DD/MM/YY' ou 'DD/MM/RR'.
-    
-    Funções tipo DATE -Utilizando a função SYSDATE
-    
-        SELECT sysdate
-        FROM dual;
-        
-    -- Cálculos com Datas
-    
-        Uma vez que o banco de dados armzena datas como números, você pode executar 
-        cálculos utilizando os operadores aritméticos como a adição e subtração
-    
-        data + número       =   data            =>  Adiciona o número de dias para uma data
-        data - número       =   data            =>  Subtrai um número de dias a partir de uma data
-        data - data         =   Número de dias  =>  Subtrai uma data a partir de outra
-        data + número/24    =   data            =>  Adiciona o número de horas para uma data
-    
-        MONTHS_BETWEEN      =   Número de meses entre duas datas
-        ADD_MONTHS          =   Adiciona meses a uma data.
-        NEXT_DAY            =   Próximo dia relativo a data especificada.
-        LAST_DAY            =   Últimos dias do mês.
-        ROUND               =   Arredonda a data.
-        TRUNC               =   Trunca a data.
-    
-        SYSDATE = '07/02/20'
-        ROUND(SYSDATE, 'MONTH')      =>  01/02/20
-        ROUND(SYSDATE, 'YEAR')       =>  01/01/20
-        TRUNC(SYSDATE, 'MONTH')      =>  01/02/20
-        TRUNC(SYSDATE, 'YEAR')       =>  01/01/20
-        TRUNC(SYSDATE)               =>  07/02/20
-                                         Zero Hora, Zero Minuto, Zero Segundo   
-                                         
-    Funções Genéricas
-    
-    As funções a seguir trabalham com quaisquer tipo de dado:
-    NVL(expr1, expr2)
-    NVL2(expr1,expr2, expr3)
-    NULLIF(expr1, expr2,)
-    COALESCE(expr1, expr2, ..., exprn)
-    
+--  Tipos:
+     > Character
+     > Number
+     > Date
+     > Conversion
+     > General
 
+--  Funções Tipo Characterer 
+     > LOWER('Introdução ORACLE 19c')   =>  introdução oracle 19c
+     > UPPER('Introdução ORACLE 19c')   =>  INTRODUÇÃO ORACLE 19C
+     > INITCAP('Introdução ORACLE 19c') =>  Introdução Oracle 19c
 */
 --Funções de Conversão Maiúsculo e Minúsculo:
 SELECT employee_id, last_name, department_id
@@ -159,6 +55,20 @@ SELECT
     INSTR('Introdução ORACLE 19c','ORACLE')
 FROM dual;
 
+-- Funções de manipulação de caracterer
+SELECT 
+    CONCAT('Curso: ', 'Introdução ORACLE 19C'),      --  Curso: Introdução ORACLE 19c
+    SUBSTR('Introdução ORACLE 19c',1,11),            --  Introdução
+    LENGTH('Introdução ORACLE 19c'),                 --  21
+    INSTR('Introdução ORACLE 19c','ORACLE'),         --  12
+    LPAD('Introdução ORACLE 19c',10,'*'),            --  **********Introdução ORACLE 19c
+    RPAD('Introdução ORACLE 19c',10,'*'),            --  Introdução ORACLE 19c**********
+    REPLACE('Introdução ORACLE 12c','12c','19c'),    --  Introdução ORACLE 19c
+    TRIM(';'FROM 'nome@gmail.com;'),                 --  nome@gmail.com
+    RTRIM('nome@gmail.com',';'),                     --  nome@gmail.com
+    LTRIM(' nome@gmail.com','')                      --  nome@gmail.com
+FROM dual;
+
 SELECT 
     first_name "Nome",
     LPAD(first_name,20,' ') "Nome alinhado a direita",
@@ -170,7 +80,14 @@ SELECT
 FROM jobs
 WHERE job_title = 'President';
 
+/*
+    > ROUND: arredonda o valor para a casa decimal especificada
+    > TRUNC: Trunca o valor para a casa decimaal especificada
+    > MOD: Retorna o resto da divisão
+*/
 --  Funções tipo NUMBER
+SELECT 30000 * 1.25 FROM dual;
+
 SELECT
     ROUND(45.923,2),ROUND(45.923,0)
 FROM dual;
@@ -186,14 +103,41 @@ FROM dual;
 SELECT ABS(-9), SQRT(9)
 FROM dual;
 
---  Funções tipo DATE
+/*
+--  Funções tipo DATE - Trabalhando com Datas
+     > O format default de exibição de datas é definido pelo DBA através do parametro NLS_DATE_FORMAT;
+     > No Brasil normalmente o formato default de exibição de datas é definido para 'DD/MM/YY' ou 'DD/MM/RR'.
+*/
 SELECT sysdate
 FROM dual;
 
 DESC dual;
 SELECT * FROM dual;
-SELECT 30000 * 1.25 FROM dual;
 
+/*
+    > Uma vez que o banco de dados armazena datas como números, você pode executar 
+    cálculos utilizando os operadores aritméticos como a adição e subtração
+    
+     - data + número       =   data            =>  Adiciona o número de dias para uma data
+     - data - número       =   data            =>  Subtrai um número de dias a partir de uma data
+     - data - data         =   Número de dias  =>  Subtrai uma data a partir de outra
+     - data + número/24    =   data            =>  Adiciona o número de horas para uma data
+     
+     - MONTHS_BETWEEN      =   Número de meses entre duas datas
+     - ADD_MONTHS          =   Adiciona meses a uma data.
+     - NEXT_DAY            =   Próximo dia relativo a data especificada.
+     - LAST_DAY            =   Últimos dias do mês.
+     - ROUND               =   Arredonda a data.
+     - TRUNC               =   Trunca a data.
+    
+     - SYSDATE = '07/02/20'
+     - ROUND(SYSDATE, 'MONTH')      =>  01/02/20
+     - ROUND(SYSDATE, 'YEAR')       =>  01/01/20
+     - TRUNC(SYSDATE, 'MONTH')      =>  01/02/20
+     - TRUNC(SYSDATE, 'YEAR')       =>  01/01/20
+     - TRUNC(SYSDATE)               =>  07/02/20
+                                         Zero Hora, Zero Minuto, Zero Segundo
+*/
 -- Cálculos com Datas
 SELECT SYSDATE, SYSDATE + 30, SYSDATE + 40, SYSDATE - 30
 FROM dual;
@@ -236,6 +180,14 @@ SELECT first_name, last_name, hire_date
 FROM employees
 WHERE hire_date = TO_DATE('17/06/2003','DD/MM/YYYY');
 
+/*
+--  Funções Genéricas
+     > As funções a seguir trabalham com quaisquer tipo de dado:
+     > NVL(expr1, expr2)
+     > NVL2(expr1,expr2, expr3)
+     > NULLIF(expr1, expr2,)
+     > COALESCE(expr1, expr2, ..., exprn)
+*/
 --Utilizando funções aninhadas
 SELECT first_name, last_name, ROUND(MONTHS_BETWEEN(SYSDATE, hire_date),0)NUMERO_MESES
 FROM employees
@@ -245,16 +197,3 @@ WHERE hire_date = TO_DATE('17/06/2003','DD/MM/YYYY');
 SELECT last_name, salary, NVL(commission_pct,0), salary*12 SALARIO_ANUAL,
 (salary*12) + (salary*12*NVL(commission_pct,0)) REMUNERAÇÃO_ANUAL
 FROM employees;
-
-
-
-
-
-
-
-
-
-
-
-
-
