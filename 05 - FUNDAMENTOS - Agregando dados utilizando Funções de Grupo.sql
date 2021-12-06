@@ -1,34 +1,29 @@
 /*
- SEÇÃO 10 - AULA 1
-13. Agregando dados utilizando Funções de Grupo
+Autor: Vicente T Freitas
+Descrição: Curso de Oracle SQL Especialista: do Básico ao Avançado
+
+-- SEÇÃO 10 - Aula 01: Agregando dados utilizando Funções de Grupo
 
 -- OBJETIVOS
-
-   Conhecer as príncipais funções de grupo disponíveis
-   Utilizar Funções de Grupo
-   Agrupar dados utilizando a cláusula GROUP BY
-   Incluir ou excluir grupos utilizando a cláusula HAVING
+    > Conhecer as príncipais funções de grupo disponíveis
+    > Utilizar Funções de Grupo
+    > Agrupar dados utilizando a cláusula GROUP BY
+    > Incluir ou excluir grupos utilizando a cláusula HAVING
 
 -- Príncipais funções de grupo
+    > AVG      -  Retorna a média do grupo
+    > COUNT    -  Número de linhas do grupo
+    > MAX      -  Maior valor do grupo
+    > MIN      -  Menor valor do grupo
+    > SUM      -  Somatório do grupo
+    > STDDEV   -  Desvio padrão do grupo
+    > VARIANCE -  Variância do grupo      
 
-    AVG      -  Retorna a média do grupo
-    COUNT    -  Número de linhas do grupo
-    MAX      -  Maior valor do grupo
-    MIN      -  Menor valor do grupo
-    SUM      -  Somatório do grupo
-    STDDEV   -  Desvio padrão do grupo
-    VARIANCE -  Variância do grupo
-
--- Utilizando funções de grupo
-
-   SELECT função_grupo(coluna),...
-   FROM tabela
-   [WHERE condição]
-   [ORDER BY coluna];          
+OBS: por padrão as funções de grupo não incluem valores nulos
 */
     
 /*  Utilizando as funções AVG e SUM
-        As funções AVG e SUM podem ser utilizadas para dados númericos
+    > As funções AVG e SUM podem ser utilizadas para dados númericos
 */
 SELECT AVG(salary), SUM(salary)
 FROM employees;
@@ -58,8 +53,9 @@ SELECT COUNT(NVL(commission_pct,0))
 FROM employees;
 
 /*  Utilizando a função COUNT com DISTINCT
-        COUNT(DISTINCT expressão) retorna o número de linhas distintas e valores
-        não nulos para expressão.*/
+     > COUNT(DISTINCT expressão) retorna o número de linhas distintas e valores
+        não nulos para expressão.
+*/
 SELECT COUNT(DISTINCT department_id)
 FROM employees;
 
@@ -76,30 +72,4 @@ FROM employees; -- FORMA ERRADA não leva em consideração null
 
 SELECT AVG(NVL(commission_pct,0))
 FROM employees;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  
