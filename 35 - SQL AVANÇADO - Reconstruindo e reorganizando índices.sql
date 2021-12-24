@@ -1,4 +1,4 @@
--- 34 - SQL AVANÇADO - Reconstruindo e Reorganizando Índices
+-- 35 - SQL AVANÇADO - Reconstruindo e Reorganizando Índices
 
 -- Reconstruindo e Reorganizando um Índice
 ALTER INDEX employees_last_name_first_name_idx REBUILD;
